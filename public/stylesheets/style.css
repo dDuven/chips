@@ -4,11 +4,11 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #fce410;
 }
 
 h1{font-family: Arial, sans-serif;
-  color: red;
+  color: #000000;
 }
 img {
   margin: 5px;
@@ -25,14 +25,15 @@ img {
     padding: 0;
     overflow: hidden;
     border: 1px solid #e7e7e7;
-    background-color: #f3f3f3;
+    background-color: #f79d53;
   }
   li {
     float: left;
   }
   li a {
     display: block;
-    color: #666;text-align: center;
+    color: black;
+    text-align: center;
     padding: 14px 16px;
     text-decoration: none;
   }
