@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET contact page. */
 router.get('/', function(req, res, next) {
-    res.render('contact', { title: 'Contact Chips!' });
+    res.render('contact');
 });
 
 module.exports = router;

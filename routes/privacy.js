@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET privacy page. */
 router.get('/', function(req, res, next) {
-    res.render('privacy', { title: 'CHIPS! Privacy' });
+    res.render('privacy');
 });
 
 module.exports = router;
