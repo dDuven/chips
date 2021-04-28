@@ -5,6 +5,24 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var layouts = require('express-ejs-layouts');
 
+const mariadb = require('mariadb/callback');
+const db = mariadb.createConnection({host: 'eagle.cdm.depaul.edu',
+user: 'dedwar29', 
+password: 'dedwar29', 
+database: 'chips'});
+
+// connect to database
+db.connect((err) => {
+  if (err) {
+    console.log("Unable to connect to database due to error: " + err);
+    res.render('error');
+  } else
+  {
+    console.log("Connected to DB");
+  }
+});
+global.db = db;
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var aboutRouter = require('./routes/about');
