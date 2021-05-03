@@ -33,6 +33,13 @@ var productRouter = require('./routes/product');
 var categoryRouter = require('./routes/category');
 var supplierRouter = require('./routes/supplier');
 var saleorderRouter = require('./routes/saleorder');
+var orderdetailRouter = require('./routes/orderdetail');
+var reviewRouter = require('./routes/review');
+var subscriptionRouter = require('./routes/subscription');
+var customerRouter = require('./routes/customer');
+
+
+
 
 
 var app = express();
@@ -58,6 +65,14 @@ app.use('/product', productRouter);
 app.use('/category', categoryRouter);
 app.use('/supplier', supplierRouter);
 app.use('/saleorder', saleorderRouter);
+app.use('/orderdetail', orderdetailRouter);
+app.use('/review', reviewRouter);
+app.use('/subscription', subscriptionRouter);
+app.use('/customer', customerRouter);
+
+
+
+
 
 
 
