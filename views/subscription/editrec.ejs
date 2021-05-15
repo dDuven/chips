@@ -2,10 +2,17 @@
 <form action="/subscription/save" method="post">
     <input type="hidden" name="subscription_id" value="<%= onerec.subscription_id %>" >
     <table>
-        <tr> <td> Customer ID: </td> <td> <input type="int" name="customer_id" required> </td> </tr>
-        <tr> <td> Category ID: </td> <td> <input type="int" name="category_id" required> </td> </tr>
-        <tr> <td> Subscribe Date: </td> <td> <input type="date" name="subscribedate" required> </td> </tr>
-        <tr> <td> Unsubscribe Date: </td> <td> <input type="date" name="unsubscribedate" required> </td> </tr>
+        <tr> <td> Customer ID: </td> <td> <input type="int" name="customer_id" value="<%=onerec.customer_id %>" required> </td> </tr>
+        <tr> <td> Category ID: </td> <td> <input type="int" name="category_id" value="<%=onerec.category_id %>" required> </td> </tr>
+        <tr> <td> Subscribe Date: </td> <td> <input type="date" name="subscribedate" value="<%= onerec.subscribedate.toISOString().split('T')[0] %>" required> </td> </tr>
+
+        <% if (onerec.unsubscribedate == "") { %> 
+            <tr> <td> Unsubscribe Date: </td> <td> <input type="date" name="unsubscribedate" value="<%= onerec.unsubscribedate%>"> </td> </tr>
+    <% } else { %>
+        <tr> <td> Unsubscribe Date: </td> <td> <input type="date" name="unsubscribedate" value="<%= onerec.unsubscribedate.toISOString().split('T')[0] %>"> </td> </tr>
+        <% } %>
+
+
         </table>
     <button type="submit">Save</button>
 </form>

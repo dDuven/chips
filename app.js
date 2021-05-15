@@ -37,6 +37,9 @@ var orderdetailRouter = require('./routes/orderdetail');
 var reviewRouter = require('./routes/review');
 var subscriptionRouter = require('./routes/subscription');
 var customerRouter = require('./routes/customer');
+var searchRouter = require('./routes/search');
+var reportRouter = require('./routes/report');
+
 
 
 
@@ -69,6 +72,8 @@ app.use('/orderdetail', orderdetailRouter);
 app.use('/review', reviewRouter);
 app.use('/subscription', subscriptionRouter);
 app.use('/customer', customerRouter);
+app.use('/search', searchRouter);
+app.use('/report', reportRouter);
 
 
 

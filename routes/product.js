@@ -6,7 +6,7 @@ var router = express.Router();
 // ==================================================
 
 router.get('/', function(req, res, next) {
-    let query = "SELECT product_id, productname, supplier_id, category_id, prodprice, status FROM product";
+    let query = "SELECT product_id, productname, supplier_id, category_id, prodprice, status, homepage FROM product";
 
     // execute query
     db.query(query, (err, result) => {
@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 // Route to view one specific record. Notice the view is one record
 // ==================================================
 router.get('/:recordid/show', function(req, res, next) {
-    let query = "SELECT product_id, productname, prodimage, description, supplier_id, category_id, subcategory_1, subcategory_2, dimensions, prodprice, status FROM product WHERE product_id= " + req.params.recordid;
+    let query = "SELECT product_id, productname, prodimage, description, supplier_id, category_id, subcategory_1, subcategory_2, dimensions, prodprice, status, homepage FROM product WHERE product_id= " + req.params.recordid;
    
     // execute query
     db.query(query, (err, result) => {
@@ -39,7 +39,16 @@ router.get('/:recordid/show', function(req, res, next) {
 // Route to show empty form to obtain input form end-user.
 // ==================================================
 router.get('/addrecord', function(req, res, next) {
-    res.render('product/addrec');
+
+    let query = "SELECT category_id, categoryname FROM category"; 
+    // execute query
+    db.query(query, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.render('error');
+        }
+    res.render('product/addrec', {category: result});
+    });
 });
 
 // ==================================================
@@ -47,10 +56,17 @@ router.get('/addrecord', function(req, res, next) {
 // ==================================================
 
 router.post('/', function(req, res, next) {
-    let insertquery = "INSERT INTO product (productname, prodimage, description, supplier_id, category_id, subcategory_1, subcategory_2, dimensions, prodprice, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    var homepagevalue = 0;
+
+    if (req.body.homepage)
+        {homepagevalue = 1;}
+    
+
+    let insertquery = "INSERT INTO product (productname, prodimage, description, supplier_id, category_id, subcategory_1, subcategory_2, dimensions, prodprice, status, homepage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.query(insertquery,[req.body.productname, req.body.prodimage, req.body.description,
     req.body.supplier_id, req.body.category_id, req.body.subcategory_1, req.body.subcategory_2, 
-    req.body.dimensions, req.body.prodprice, req.body.status],
+    req.body.dimensions, req.body.prodprice, req.body.status, homepagevalue],
     (err, result) => {
          if (err) {
              console.log(err);
@@ -65,7 +81,7 @@ router.post('/', function(req, res, next) {
 // Route to edit one specific record.
 // ==================================================
 router.get('/:recordid/edit', function(req, res, next) {
-    let query = "SELECT product_id, productname, prodimage, description, supplier_id, category_id, subcategory_1, subcategory_2, dimensions, prodprice, status FROM product WHERE product_id = " 
+    let query = "SELECT product_id, productname, prodimage, description, supplier_id, category_id, subcategory_1, subcategory_2, dimensions, prodprice, status, homepage FROM product WHERE product_id = " 
     + req.params.recordid;
 
     // execute query
@@ -74,7 +90,15 @@ router.get('/:recordid/edit', function(req, res, next) {
             console.long(err);
             res.render('error');
         } else {
-            res.render('product/editrec', {onerec: result[0] });
+
+            db.query(query, (err, result2) => {
+                if (err) {
+                    console.log(err);
+                    res.render('error');
+                }
+
+            res.render('product/editrec', {onerec: result[0], category: result2 });
+            });
         }
     });
 });
@@ -83,10 +107,16 @@ router.get('/:recordid/edit', function(req, res, next) {
 // Route to save edited data in database.
 // ==================================================
 router.post('/save', function(req, res, next) {
-    let updatequery = "UPDATE product SET productname = ?, prodimage = ?, description = ?, supplier_id = ?, category_id = ?, subcategory_1 = ?, subcategory_2 = ?, dimensions = ?, prodprice = ?, status = ? WHERE product_id = " + req.body.product_id; 
+
+    var homepagevalue = 0;
+
+    if (req.body.homepage)
+        {homepagevalue = 1;}
+
+    let updatequery = "UPDATE product SET productname = ?, prodimage = ?, description = ?, supplier_id = ?, category_id = ?, subcategory_1 = ?, subcategory_2 = ?, dimensions = ?, prodprice = ?, status = ?, homepage = ? WHERE product_id = " + req.body.product_id; 
 
      db.query(updatequery,[req.body.productname, req.body.prodimage, req.body.description, req.body.supplier_id, req.body.category_id, 
-        req.body.subcategory_1, req.body.subcategory_2, req.body.dimensions, req.body.prodprice, req.body.status],(err, result) => {
+        req.body.subcategory_1, req.body.subcategory_2, req.body.dimensions, req.body.prodprice, req.body.status, homepagevalue],(err, result) => {
             if (err) {
                 console.log(err);
                 res.render('error');

@@ -2,14 +2,39 @@
     <h1>Welcome to CHIPS!</h1>
     <p>We are CHIPS!</p>
 
-    <h2> <%= books %></h2>
-   
-    <hr>
+    <table> <tr>
 
-    <% for(let i = 0; i < books.length; i++) { %>
-        <product>
-            <h2><%= books[i].title %></h2>
-            <p><%= books[i].author %></p>
-            <p><%= books[i].publishedAt %></p>
-        </product>
+    <td width = "80%">
+        <% if (allrecs.length > 0) {%>
+            <% allrecs.forEach((recref, index) => { %>
+                <product>
+                <table> 
+                    <tr><td><%= recref.productname %></td></tr>
+                    <tr><td><%= recref.prodimage %></td></tr>
+                    <tr><td><%= recref.category_id %></td></tr>
+                    <tr><td><%= recref.supplier_id %></td></tr>
+                    <tr><td><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(recref.prodprice) %></td></tr>
+                    <tr><td><%= recref.status %></td></tr>
+                    <tr><td><a href='/product/<%= recref.product_id %>/show'>Details</a></td></tr>
+                </table>
+            </product>
+            <% }); %>
         <% } %>
+    </td>
+
+    <td width="20%">
+
+        <td width="20%">
+            <% if (promos.length > 0) {%>
+            <table> 
+                <% promos.forEach((recref, index) => { %>
+                    <tr><td><img src="/images/<%= recref.promoimage %>"></td></tr>
+                <% }); %>
+            </table>
+
+        <% } %>
+
+
+    </td>
+   
+</tr></table>

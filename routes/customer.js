@@ -13,8 +13,9 @@ router.get('/', function(req, res, next) {
         if (err) {
             console.log(err);
             res.render('error');
-        }
+        } else {
         res.render('customer/allrecords', {allrecs: result });
+        }
     });
 });
 
