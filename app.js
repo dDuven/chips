@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var layouts = require('express-ejs-layouts');
+const session = require('express-session');
 
 const mariadb = require('mariadb/callback');
 const db = mariadb.createConnection({host: 'eagle.cdm.depaul.edu',
@@ -39,6 +40,7 @@ var subscriptionRouter = require('./routes/subscription');
 var customerRouter = require('./routes/customer');
 var searchRouter = require('./routes/search');
 var reportRouter = require('./routes/report');
+var catalogRouter = require('./routes/catalog');
 
 
 
@@ -58,6 +60,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(layouts);
 
+app.use(session({secret: 'ChipsAppSecret'}));
+app.use(function(req,res,next){
+  res.locals.session = req.session;
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/about', aboutRouter);
@@ -74,6 +82,8 @@ app.use('/subscription', subscriptionRouter);
 app.use('/customer', customerRouter);
 app.use('/search', searchRouter);
 app.use('/report', reportRouter);
+app.use('/catalog', catalogRouter);
+
 
 
 
