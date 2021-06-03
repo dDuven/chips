@@ -10,7 +10,7 @@
                 <product>
                 <table> 
                     <tr><td><%= recref.productname %></td></tr>
-                    <tr><td><%= recref.prodimage %></td></tr>
+                    <td><img src="/images/<%= recref.prodimage %>"></td>
                     <tr><td><%= recref.category_id %></td></tr>
                     <tr><td><%= recref.supplier_id %></td></tr>
                     <tr><td><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(recref.prodprice) %></td></tr>
